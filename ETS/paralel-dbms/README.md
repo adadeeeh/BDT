@@ -34,7 +34,7 @@ MySQL Group Replication terdiri dari 3 server, yaitu **db1**, **db2**, **db3** d
 - 512 MB RAM
 - IP 192.168.33.11, 192.168.33.12, 192.168.33.13
 
-# **Implemenstasi Sistem**
+# **Implementasi Sistem**
 Implementasi sistem ini berdasarkan file-file yang sudah diberikan oleh dosen dengan nama file **mysql-cluster-proxysql.zip**.
 
 ### 1. Ekstrak File
