@@ -2,10 +2,10 @@
 UTS Basis Data Terdistribusi 2018
 
 # **Outline**
-- Tujuan
-- Deskripsi Sistem
-- Implementasi Sistem
-- Testing
+- [Tujuan](#tujuan)
+- [Deskripsi Sistem](#deskripsi-sistem)
+- [Implementasi Sistem](#implementasi-sistem)
+- [Testing](#testing)
   
 # **Tujuan**
 - Membuat server basis data terdistribusi dengan menggunakan konsep group replication
@@ -20,14 +20,14 @@ UTS Basis Data Terdistribusi 2018
 
 Sistem ini dibuat dengan virtual box dengan bantuan vagrant. Sistem ini terdiri dari 1 ProxySQL dan 3 MySQL Replication(MySQL Group Replication).
 
-### ProxySQL
+## ProxySQL
 ProxySQL bertugas sebagai load balancer dengan konfigurasi sebagai berikut :
 - Sistem Operasi Ubuntu 16.04
 - MySQL Community Edition
 - 512 MB RAM
 - IP 192.168.33.10
 
-### MySQL Group Replication
+## MySQL Group Replication
 MySQL Group Replication terdiri dari 3 server, yaitu **db1**, **db2**, **db3** dengan setiap server mempunyai konfigurasi sebagai berikut :
 - Sistem Operasi: Ubuntu 16.04
 - MySQL Server Community Edition
@@ -94,39 +94,39 @@ end
 ```
 
 ### 3. Melakukan Vagrant Up
-#### Jalankan sampai semua vm terbentuk dengan perintah 
+Jalankan sampai semua vm terbentuk dengan perintah 
 ```bash
 $ vagrant up 
 ```
-#### Kemudian lakukan provision untuk proxy dengan perintah
+Kemudian lakukan provision untuk proxy dengan perintah
 ```bash
 $ vagrant ssh proxy
 ```
-#### Dan jalanakn
+Dan jalanakn
 ```bash
 vagrant@proxy:~$ mysql -u admin -p -h 127.0.0.1 -P 6032 < /vagrant/proxysql.sql
 #password: admin
 ```
-#### Tujuan provision diatas adalah :
+Tujuan provision diatas adalah :
 - Mengganti password admin ProxySQL
 - Menambahkan user monitoring
 - Menambahkan node server MySQL
 - Menambahkan user `playgrounduser` sebagai user MySQL biasa yang memiliki database `playground`
   
-#### Tes koneksi dari salah satu node MySQL Group Replication ke ProxySQL
+Tes koneksi dari salah satu node MySQL Group Replication ke ProxySQL
 ```bash
 vagrant@db2:~$ mysql -u playgrounduser -p -h 192.168.33.10 -P 6033
 #password: playgroundpassword
 ```
 
 ### 4. Instalasi Apache, PHP, dan Wordpress
-#### Melakukan instalasi dengan menjalankan
+Melakukan instalasi dengan menjalankan
 ```bash
 vagrant@proxy:~$ sudo apt-get install -y apache2 php libapache2-mod-php php-mcrypt php-mysql
 ```
 
 ### 5. Konfigurasi Wordpress
-#### Membuat database yang akan digunakan untuk wordpress di MySQL Group Replication dengan membuat databases di salah satu node.
+Membuat database yang akan digunakan untuk wordpress di MySQL Group Replication dengan membuat databases di salah satu node.
 ```bash
 vagrant@db1:~$ mysql -u root -p
 #password: admin
@@ -137,7 +137,7 @@ mysql> CREATE USER 'wordpressuser'@'%' IDENTIFIED BY 'wordpresspassword';
 mysql> GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpressuser'@'%';
 mysql> FLUSH PRIVILEGES;
 ```
-#### Tambahkan user dan password yang sama pada ProxySQL
+Tambahkan user dan password yang sama pada ProxySQL
 ```bash
 vagrant@proxy:~$ mysql -u admin -p -h 127.0.0.1 -P 6032
 #password: password
@@ -147,7 +147,7 @@ mysql> INSERT INTO mysql_users(username, password, default_hostgroup) VALUES ('w
 mysql> LOAD MYSQL USERS TO RUNTIME;
 mysql> SAVE MYSQL USERS TO DISK;
 ```
-#### Installasi Wordpress
+Installasi Wordpress
 
 Melakukan installasi dengan mengakses ([http://192.168.33.10](http://192.168.33.10))
 
@@ -159,7 +159,7 @@ Melakukan installasi dengan mengakses ([http://192.168.33.10](http://192.168.33.
 
 ![wordpress4](images/4.png)
 
-#### Cek Replikasi
+Cek Replikasi
 Melakukan post pada di ([http://192.168.33.10/wp-admin](http://192.168.33.10/wp-admin))
 
 ![cek1](images/postadmin.png)
