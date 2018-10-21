@@ -169,15 +169,15 @@ Cek di semua node MySQL Replication apakah ada recordnya
 ![cek2](images/cekdatabases.png)
 
 # Testing
-## Mematikan salah satu MySQL
+Mematikan salah satu MySQL
 ```bash
 vagrant@db1:~$ sudo service mysql stop
 ```
-## Buat post baru di wordpress
+Buat post baru di wordpress
 
 ![postlagi1](images/postbaru.png)
 
-## Hidupkan lagi MySQL yang telah dimatikan dan cek isi database
+Hidupkan lagi MySQL yang telah dimatikan dan cek isi database
 ```bash
 vagrant@db1:~$ mysql -u root -p
 ```
