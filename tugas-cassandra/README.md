@@ -19,27 +19,35 @@ Dataset yang digunakan adalah [Rolling Stones's 500 Greatest Albums of All Time]
 Dataset diedit agar mempunyai primary key
 
 ## **Installation**
-1. Create Virtual Environment
+1. Vagrant Up Vagrantfile
    ```sh
-    virtualenv venv
-    ```
-2. Activate Virtual Environment
-   ```sh
-    . venv/bin/activate
+   $ vagrant up
    ```
-3. Install Requirements
+2. Masuk ke VB
    ```sh
-    pip install -r requirements.txt
+   $ vagrant ssh
    ```
-4. Vagrant Up Vagrantfile
+3. Masuk ke directory vagrant
    ```sh
-    vagrant up
+   $ cd /vagrant
    ```
-5. Masuk ke Cassandra Shell
+4. Create Virtual Environment
    ```sh
-   cqls
+   vagrant@cassandra: virtualenv venv
    ```
-6. Membuat Keyspace
+5. Activate Virtual Environment
+   ```sh
+   vagrant@cassandra: . venv/bin/activate
+   ```
+6. Install Requirements
+   ```sh
+   (venv) vagrant@cassandra: pip install -r requirements.txt
+   ```
+7. Masuk ke Cassandra Shell
+   ```sh
+   (venv) vagrant@cassandra: cqls
+   ```
+8.  Membuat Keyspace
    ```SQL
    CREATE KEYSPACE rsmagz
    WITH replication = {
@@ -47,14 +55,19 @@ Dataset diedit agar mempunyai primary key
        'replication_factor' : 1
        };
    ```
-7. Membuat Table
+11. Membuat Table
    ```SQL
    CREATE TABLE rsmagz.album_list(id int,number text, year text, album text, artist text, genre text, subgenre text, PRIMARY KEY(id));
    ```
-8. Import Data albumlist.csv
+11. Import Data albumlist.csv
    ```SQL
    COPY rsmagz.album_list(number,year,album,artist,genre,subgenre,id) FROM 'albumlist.csv' WITH HEADER = TRUE;
    ```
+12. Run flask
+    ```sh
+    (venv) vagrant@cassandra: export FLASK_ENV=development
+    (venv) vagrant@cassandra: flask run --host=0.0.0.0
+    ```
 
 ## **API**
 1. Create
