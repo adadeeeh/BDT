@@ -29,41 +29,41 @@ Dataset diedit agar mempunyai primary key
    ```
 3. Masuk ke directory vagrant
    ```sh
-   $ cd /vagrant
+   vagrant@cassandra:~$ cd /vagrant
    ```
 4. Create Virtual Environment
    ```sh
-   vagrant@cassandra: virtualenv venv
+   vagrant@cassandra:/vagrant$ virtualenv venv
    ```
 5. Activate Virtual Environment
    ```sh
-   vagrant@cassandra: . venv/bin/activate
+   vagrant@cassandra:/vagrant$ . venv/bin/activate
    ```
 6. Install Requirements
    ```sh
-   (venv) vagrant@cassandra: pip install -r requirements.txt
+   (venv) vagrant@cassandra:/vagrant$ pip install -r requirements.txt
    ```
 7. Masuk ke Cassandra Shell
    ```sh
-   (venv) vagrant@cassandra: cqls
+   (venv) vagrant@cassandra:~$ cqls
    ```
 8.  Membuat Keyspace
-   ```SQL
-   CREATE KEYSPACE rsmagz
-   WITH replication = {
-       'class' : 'SimpleStrategy',
-       'replication_factor' : 1
-       };
-   ```
-11. Membuat Table
-   ```SQL
-   CREATE TABLE rsmagz.album_list(id int,number text, year text, album text, artist text, genre text, subgenre text, PRIMARY KEY(id));
-   ```
-11. Import Data albumlist.csv
-   ```SQL
-   COPY rsmagz.album_list(number,year,album,artist,genre,subgenre,id) FROM 'albumlist.csv' WITH HEADER = TRUE;
-   ```
-12. Run flask
+    ```SQL
+    CREATE KEYSPACE rsmagz
+    WITH replication = {
+        'class' : 'SimpleStrategy',
+        'replication_factor' : 1
+        };
+    ```
+9. Membuat Table
+    ```SQL
+    CREATE TABLE rsmagz.album_list(id int,number text, year text, album text, artist text, genre text, subgenre text, PRIMARY KEY(id));
+    ```
+10. Import Data albumlist.csv
+    ```SQL
+    COPY rsmagz.album_list(number,year,album,artist,genre,subgenre,id) FROM 'albumlist.csv' WITH HEADER = TRUE;
+    ```
+11. Run flask
     ```sh
     (venv) vagrant@cassandra: export FLASK_ENV=development
     (venv) vagrant@cassandra: flask run --host=0.0.0.0
