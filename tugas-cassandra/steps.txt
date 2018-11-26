@@ -1,0 +1,15 @@
+CREATE KEYSPACE rsmagz
+WITH replication = {
+	'class' : 'SimpleStrategy',
+	'replication_factor' : 1
+};
+
+CREATE TABLE rsmagz.album_list(number text, year text, album text, artist text, genre text, subgenre text, PRIMARY KEY(number));
+
+COPY rsmagz.album_list(number,year,album,artist,genre,subgenre) FROM '/home/pedro/Documents/Kuliah/BDT/tugas-cassandra/albumlist.csv' WITH HEADER = TRUE;
+
+CREATE TABLE rsmagz.album_list(id int,number text, year text, album text, artist text, genre text, subgenre text, PRIMARY KEY(id));
+
+COPY rsmagz.album_list(number,year,album,artist,genre,subgenre,id) FROM '/home/pedro/Documents/Kuliah/BDT/tugas-cassandra/dataset/albumlist.csv' WITH HEADER = TRUE;
+
+INSERT INTO rsmagz.album_list1(id, number, year, album, artist, genre, subgenre) VALUES (8ebaafa4-f0b9-11e8-9eb6-db3c33de90b5, '501', '2000', 'Telo', 'Goreng', 'Manis', 'Kecut');
