@@ -37,7 +37,7 @@ Dataset diedit agar mempunyai primary key
    ```
 5. Masuk ke Cassandra Shell
    ```sh
-   cqls 192.168.33.200
+   cqls
    ```
 6. Membuat Keyspace
    ```SQL
@@ -59,31 +59,35 @@ Dataset diedit agar mempunyai primary key
 ## **API**
 1. Create
    ```sh
-   localhost:5000/
+   192.168.33.200:5000/
    #methods POST
    ```
    ![create](images/create.png)
 2. Read All
    ```sh
-   localhost:5000/
+   192.168.33.200:5000/
    #methods GET
    ```
    ![read](images/readall.png)
 3. Search by ID
    ```sh
-   localhost:5000/<id>
+   192.168.33.200:5000/<id>
    #methods GET
    ```
    ![search](images/search.png)
 4. Update
    ```sh
-   localhost:5000/<id>
+   192.168.33.200:5000/<id>
    #methods PUT
    ```
    ![update](images/update.png)
+   Cek Update
+   ![cek update](images/cekupdate.png)
 5. Delete
    ```sh
-   localhost:5000/<id>
+   192.168.33.200:5000/<id>
    #methods DELETE
    ```
-   ![delete](images/delete.png)
+   ![Delete](images/delete.png)
+   Cek Delete
+   ![cek delete](images/cekdelete.png)
