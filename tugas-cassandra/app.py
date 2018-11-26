@@ -63,3 +63,6 @@ def getOne(id):
 def delete(id):
     row = session.execute('DELETE FROM album_list WHERE id = '+id);
     return 'Deleted'
+
+if __name__ == '__main__':
+        app.run(host='0.0.0.0', debug=True)
