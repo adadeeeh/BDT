@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+Vagrant.configure("2") do |config|
+  
+  # MySQL Cluster dengan 3 node
+  (1..3).each do |i|
+    config.vm.define "dbs#{i}" do |node|
+      node.vm.hostname = "dbs#{i}"
+      node.vm.box = "bento/ubuntu-16.04"
+      node.vm.network "private_network", ip: "192.168.55.1#{i}"
+
+      # Opsional. Edit sesuai dengan nama network adapter di komputer
+      node.vm.network "public_network", bridge: "wlo1"
+      
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "dbs#{i}"
+        vb.gui = false
+        vb.memory = "1024"
+      end
+  
+      node.vm.provision "shell", path: "deployMySQL1#{i}.sh", privileged: false
+    end
+  end
+
+  config.vm.define "proxys" do |proxy|
+    proxy.vm.hostname = "proxys"
+    proxy.vm.box = "bento/ubuntu-16.04"
+    proxy.vm.network "private_network", ip: "192.168.55.10"
+    proxy.vm.network "public_network",  bridge: "wlo1"
+    
+    proxy.vm.provider "virtualbox" do |vb|
+      vb.name = "proxys"
+      vb.gui = false
+      vb.memory = "1024"
+    end
+
+    proxy.vm.provision "shell", path: "deployProxySQL.sh", privileged: false
+  end
+
+end
