@@ -53,9 +53,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/posts/create">Post Album</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="/anggota/create">Post Anggota</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </ul>
 

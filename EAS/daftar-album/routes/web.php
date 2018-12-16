@@ -22,4 +22,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('anggota', 'AnggotaController') ;
+// Route::resource('anggota', 'AnggotaController') ;
