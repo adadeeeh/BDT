@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">Album List</a>
+        <a class="navbar-brand" href="/">Most Popular Album</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
             {{-- <li class="nav-item">
@@ -13,10 +13,10 @@
                 <a class="nav-link" href="/services">Services</a>
             </li> --}}
             <li class="nav-item">
-                <a class="nav-link" href="/posts">Posts</a>
+                <a class="nav-link" href="/posts">Album</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/posts/create">Create Post</a>
+                <a class="nav-link" href="/posts/create">Create Album Post</a>
             </li>
         </div>
         {{-- <form class="form-inline my-2 my-md-0">

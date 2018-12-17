@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Cache;
 use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Facades\Storage;
+use Redis;
+use DB;
 
 class PostsController extends Controller
 {
@@ -15,8 +18,20 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(50);
-        // $posts = Post::orderBy('created_at', 'desc');
+        //Cache Redis
+        // DB::connection()->enableQueryLog();
+        // $result = Cache::remember('posts_cache', 1, function()
+        // {
+        //     return Post::get();
+        // });
+        
+        // $log = DB::getQueryLog();
+        // print_r($log);
+        // return view('posts.index')->with('posts', $result);
+
+
+        //tanpa cache
+        $posts = Post::all();
         return view('posts.index')->with('posts', $posts);
     }
 
@@ -64,6 +79,7 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->cover_image = $fileNameToStore;
+        // $post->view_count = 0;
         $post->save();
 
         return redirect('/posts')->with('success', 'Post Created');
@@ -78,8 +94,43 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+
+        // return view('posts.show')->with('post', $post);
+        $this->id = $id;
+        $storage = Redis::connection();
+
+        if ($storage->zScore('articleViews', 'article:'.$id))
+        {
+            $storage->pipeline(function ($pipe)
+            {
+                $pipe->zIncrBy('articleViews', 1, 'article:'.$this->id);
+                // $pipe->incr('article:'.$this->id.':views');
+            });
+        }
+        else
+        {
+            $views = $storage->incr('article:'.$this->id.':views');
+            $storage->zIncrBy('articleViews', $views, 'article:'.$this->id);
+
+            if ($views == 1) {
+                $post->view_count = $views;
+                $post->save();
+                return view('posts.show')->with('post', $post);
+                // return "this is an article with id: ".$id." it has ".$views." views";
+            }
+        }
+
+        $views = $storage->incr('article:'.$this->id.':views');
+
+        // if ($views == 2) {
+        //     $views = $storage->decr('article:'.$this->id.':views');
+        // }
+        
+        $post->view_count = $views;
+        $post->save();
         return view('posts.show')->with('post', $post);
-    }
+        // return "this is an article with id: ".$id." it has ".$views." views";
+    } 
 
     /**
      * Show the form for editing the specified resource.

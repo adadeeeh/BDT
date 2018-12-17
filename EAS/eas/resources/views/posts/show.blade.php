@@ -10,6 +10,7 @@
         {!!$post->body!!}
     </div>
     <hr>
+<small>Total views {{$post->view_count}}</small>
     {{-- <small>written on {{$post->created_at}} by {{$post->user->name}}</small> --}}
     <hr>
     {{-- @if (!Auth::guest())

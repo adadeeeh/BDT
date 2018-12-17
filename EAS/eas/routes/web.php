@@ -13,4 +13,16 @@
 
 Route::get('/', 'PagesController@index');
 
+// Route::get('/', function()
+// {
+//     $redis = app()->make('redis');
+//     $redis->set("key1", "testValue");
+//     return $redis->get("key1");
+// });
+
+// Route::get('/', function()
+// {
+
+// });
+
 Route::resource('posts', 'PostsController');
